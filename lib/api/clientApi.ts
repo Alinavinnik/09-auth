@@ -1,17 +1,10 @@
-import axios from "axios";
-import type { Note, NewNote } from "../types/note";
+import { NewNote, Note } from "@/types/note";
+import { apiClient } from "./api";
 
 interface FetchNotesResponse {
   notes: Note[];
   totalPages: number;
 }
-
-const apiClient = axios.create({
-  baseURL: "https://notehub-public.goit.study/api",
-  headers: {
-    Authorization: `Bearer ${process.env.NEXT_PUBLIC_NOTEHUB_TOKEN}`,
-  },
-});
 
 //Get request
 export async function fetchNotes(search: string, page: number, tag?: string) {
@@ -38,3 +31,10 @@ export async function fetchNoteById(id: string) {
   const { data } = await apiClient.get<Note>(`/notes/${id}`);
   return data;
 }
+
+export async function register() {}
+export async function login() {}
+export async function logout() {}
+export async function checkSession() {}
+export async function getMe() {}
+export async function updateMe() {}
