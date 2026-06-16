@@ -1,10 +1,6 @@
-import { NewNote, Note } from "@/types/note";
+import { FetchNotesResponse, NewNote, Note } from "@/types/note";
 import { apiClient } from "./api";
-
-interface FetchNotesResponse {
-  notes: Note[];
-  totalPages: number;
-}
+import { User } from "@/types/user";
 
 //Get request
 export async function fetchNotes(search: string, page: number, tag?: string) {
@@ -32,7 +28,15 @@ export async function fetchNoteById(id: string) {
   return data;
 }
 
-export async function register() {}
+export interface RegisterRequest {
+  email: string;
+  password: string;
+}
+
+export async function register(user: RegisterRequest) {
+  const { data } = await apiClient.post<User>("/auth/register", user);
+  return data;
+}
 export async function login() {}
 export async function logout() {}
 export async function checkSession() {}

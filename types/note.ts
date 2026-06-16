@@ -13,3 +13,8 @@ export interface NewNote {
   content?: string;
   tag: TypeTag;
 }
+
+export interface FetchNotesResponse {
+  notes: Note[];
+  totalPages: number;
+}
