@@ -1,15 +1,17 @@
 "use client";
 import css from "./SignUpPage.module.css";
-import { register, RegisterRequest } from "../../../lib/api/clientApi";
+import { register } from "../../../lib/api/clientApi";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
 
 export default function SingUpPage() {
   const router = useRouter();
 
   const handleSubmit = async (formData: FormData) => {
     try {
-      const values = Object.fromEntries(formData) as unknown as RegisterRequest;
+      const values = Object.fromEntries(formData) as {
+        email: string;
+        password: string;
+      };
       const res = await register(values);
       console.log(res);
       if (res) {

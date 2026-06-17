@@ -1,8 +1,15 @@
+"use client";
+
 import Link from "next/link";
 import css from "./AuthNavigation.module.css";
+import { useAuth } from "@/lib/store/authStore";
 
 export default function AuthNavigation() {
-  return (
+  const { isAuthenticated, user } = useAuth();
+
+  const handleClick = () => {};
+
+  return isAuthenticated ? (
     <>
       <li className={css.navigationItem}>
         <Link href="/profile" prefetch={false} className={css.navigationLink}>
@@ -11,10 +18,14 @@ export default function AuthNavigation() {
       </li>
 
       <li className={css.navigationItem}>
-        <p className={css.userEmail}>User email</p>
-        <button className={css.logoutButton}>Logout</button>
+        <p className={css.userEmail}>{user?.email}</p>
+        <button className={css.logoutButton} onClick={handleClick}>
+          Logout
+        </button>
       </li>
-
+    </>
+  ) : (
+    <>
       <li className={css.navigationItem}>
         <Link href="/sign-in" prefetch={false} className={css.navigationLink}>
           Login

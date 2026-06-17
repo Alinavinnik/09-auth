@@ -1,18 +1,22 @@
 "use client";
-import { login, RegisterRequest } from "@/lib/api/clientApi";
+import { login } from "@/lib/api/clientApi";
 import css from "./SignInPage.module.css";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@/lib/store/authStore";
 
 export default function SingInPage() {
   const router = useRouter();
+  const setUser = useAuth((store) => store.setUser);
 
   const handleSubmit = async (formData: FormData) => {
     try {
-      const formValues = Object.fromEntries(
-        formData,
-      ) as unknown as RegisterRequest;
-      const res = await login(formValues);
-      if (res) {
+      const formValues = Object.fromEntries(formData) as {
+        email: string;
+        password: string;
+      };
+      const user = await login(formValues);
+      if (user) {
+        setUser(user);
         router.push("/profile");
       }
     } catch {}

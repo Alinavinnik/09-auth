@@ -41,7 +41,22 @@ export async function login(user: RegisterRequest) {
   const { data } = await apiClient.post<User>("/auth/login", user);
   return data;
 }
-export async function logout() {}
-export async function checkSession() {}
-export async function getMe() {}
+
+interface checkSessionResponce {
+  success: boolean;
+}
+
+export async function checkSession() {
+  const { data } = await apiClient.get<checkSessionResponce>("/auth/session");
+  return data;
+}
+export async function logout() {
+  const { data } = await apiClient.post<checkSessionResponce>("/auth/logout");
+  return data;
+}
+
+export async function getMe() {
+  const { data } = await apiClient.get<User>("/users/me");
+  return data;
+}
 export async function updateMe() {}
