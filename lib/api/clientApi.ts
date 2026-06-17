@@ -37,7 +37,10 @@ export async function register(user: RegisterRequest) {
   const { data } = await apiClient.post<User>("/auth/register", user);
   return data;
 }
-export async function login() {}
+export async function login(user: RegisterRequest) {
+  const { data } = await apiClient.post<User>("/auth/login", user);
+  return data;
+}
 export async function logout() {}
 export async function checkSession() {}
 export async function getMe() {}

@@ -1,26 +1,28 @@
 "use client";
-import css from "./SignUpPage.module.css";
-import { register, RegisterRequest } from "../../../lib/api/clientApi";
+import { login, RegisterRequest } from "@/lib/api/clientApi";
+import css from "./SignInPage.module.css";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
 
-export default function SingUpPage() {
+export default function SingInPage() {
   const router = useRouter();
 
   const handleSubmit = async (formData: FormData) => {
     try {
-      const values = Object.fromEntries(formData) as unknown as RegisterRequest;
-      const res = await register(values);
-      console.log(res);
+      const formValues = Object.fromEntries(
+        formData,
+      ) as unknown as RegisterRequest;
+      const res = await login(formValues);
       if (res) {
         router.push("/profile");
       }
     } catch {}
   };
+
   return (
     <main className={css.mainContent}>
-      <h1 className={css.formTitle}>Sign up</h1>
       <form className={css.form} action={handleSubmit}>
+        <h1 className={css.formTitle}>Sign in</h1>
+
         <div className={css.formGroup}>
           <label htmlFor="email">Email</label>
           <input
@@ -45,11 +47,11 @@ export default function SingUpPage() {
 
         <div className={css.actions}>
           <button type="submit" className={css.submitButton}>
-            Register
+            Log in
           </button>
         </div>
 
-        {/* <p className={css.error}>Error</p> */}
+        {/* <p className={css.error}>{error}</p> */}
       </form>
     </main>
   );
