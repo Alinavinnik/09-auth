@@ -3,13 +3,18 @@ import { login } from "@/lib/api/clientApi";
 import css from "./SignInPage.module.css";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/lib/store/authStore";
+import { useState } from "react";
 
-export default function SingInPage() {
+export default function SignInPage() {
   const router = useRouter();
   const setUser = useAuth((store) => store.setUser);
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (formData: FormData) => {
     try {
+      setError("");
+      setIsLoading(true);
       const formValues = Object.fromEntries(formData) as {
         email: string;
         password: string;
@@ -19,7 +24,11 @@ export default function SingInPage() {
         setUser(user);
         router.push("/profile");
       }
-    } catch {}
+    } catch {
+      setError("Somthing went wrong");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -51,11 +60,11 @@ export default function SingInPage() {
 
         <div className={css.actions}>
           <button type="submit" className={css.submitButton}>
-            Log in
+            {isLoading ? "Loading..." : "Log in"}
           </button>
         </div>
 
-        {/* <p className={css.error}>{error}</p> */}
+        {error && <p className={css.error}>{error}</p>}
       </form>
     </main>
   );

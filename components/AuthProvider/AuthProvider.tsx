@@ -14,11 +14,15 @@ export default function AuthProvider({ children }: AuthProviderProps) {
 
   useEffect(() => {
     const fetchSession = async () => {
-      const authRes = await checkSession();
-      if (authRes) {
-        const user = await getMe();
-        setAuth(user);
-      } else {
+      try {
+        const authRes = await checkSession();
+        if (authRes) {
+          const user = await getMe();
+          setAuth(user);
+        } else {
+          clearAuth();
+        }
+      } catch {
         clearAuth();
       }
     };

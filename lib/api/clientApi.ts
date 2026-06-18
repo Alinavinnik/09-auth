@@ -42,7 +42,7 @@ export async function login(user: RegisterRequest) {
   return data;
 }
 
-interface checkSessionResponce {
+export interface checkSessionResponce {
   success: boolean;
 }
 

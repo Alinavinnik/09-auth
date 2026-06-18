@@ -2,22 +2,33 @@
 import css from "./SignUpPage.module.css";
 import { register } from "../../../lib/api/clientApi";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@/lib/store/authStore";
+import { useState } from "react";
 
-export default function SingUpPage() {
+export default function SignUpPage() {
   const router = useRouter();
+  const setUser = useAuth((store) => store.setUser);
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (formData: FormData) => {
     try {
+      setError("");
+      setIsLoading(true);
       const values = Object.fromEntries(formData) as {
         email: string;
         password: string;
       };
-      const res = await register(values);
-      console.log(res);
-      if (res) {
+      const user = await register(values);
+      if (user) {
+        setUser(user);
         router.push("/profile");
       }
-    } catch {}
+    } catch (error) {
+      setError("Invalid email or password.");
+    } finally {
+      setIsLoading(false);
+    }
   };
   return (
     <main className={css.mainContent}>
@@ -47,11 +58,10 @@ export default function SingUpPage() {
 
         <div className={css.actions}>
           <button type="submit" className={css.submitButton}>
-            Register
+            {isLoading ? "Loading..." : "Register"}
           </button>
         </div>
-
-        {/* <p className={css.error}>Error</p> */}
+        {error && <p className={css.error}>Error</p>}
       </form>
     </main>
   );

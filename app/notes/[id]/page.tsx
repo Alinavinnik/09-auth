@@ -1,4 +1,4 @@
-import { fetchNoteById } from "@/lib/api/serverApi";
+import { fetchServerNoteById } from "@/lib/api/serverApi";
 import {
   HydrationBoundary,
   QueryClient,
@@ -15,21 +15,21 @@ export async function generateMetadata({
   params,
 }: NoteDetailsProps): Promise<Metadata> {
   const { id } = await params;
-  const response = await fetchNoteById(id);
+  const response = await fetchServerNoteById(id);
 
   return {
-    title: `${response.title}`,
-    description: ` ${response.content}`,
+    title: `${response.data.title}`,
+    description: ` ${response.data.content}`,
     openGraph: {
-      title: `${response.title}`,
-      description: ` ${response.content}`,
+      title: `${response.data.title}`,
+      description: ` ${response.data.content}`,
       url: `https://08-zustand-nine-psi.vercel.app/notes/filter/${id}`,
       images: [
         {
           url: "https://ac.goit.global/fullstack/react/notehub-og-meta.jpg",
           width: 1200,
           height: 630,
-          alt: `${response.title}`,
+          alt: `${response.data.title}`,
         },
       ],
     },
@@ -42,7 +42,7 @@ async function NoteDetails({ params }: NoteDetailsProps) {
   const queryClient = new QueryClient();
   queryClient.prefetchQuery({
     queryKey: ["note", id],
-    queryFn: () => fetchNoteById(id),
+    queryFn: () => fetchServerNoteById(id),
   });
 
   return (
