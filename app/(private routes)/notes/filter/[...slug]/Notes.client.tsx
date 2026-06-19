@@ -22,8 +22,8 @@ export default function Notes({ tag }: NotesProps) {
   const validTag = tag === "all" ? "" : tag;
   //Search note
   const { data, isError, isLoading } = useQuery({
-    queryKey: ["notes", searchQuery, page, validTag],
-    queryFn: () => fetchNotes(searchQuery, page, validTag),
+    queryKey: ["notes", searchQuery, validTag, page],
+    queryFn: () => fetchNotes(searchQuery, validTag, page),
     placeholderData: keepPreviousData,
   });
 

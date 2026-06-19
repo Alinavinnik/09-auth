@@ -3,7 +3,7 @@ import { apiClient } from "./api";
 import { User } from "@/types/user";
 
 //Get request
-export async function fetchNotes(search: string, page: number, tag?: string) {
+export async function fetchNotes(search: string, tag: string, page: number) {
   const { data } = await apiClient.get<FetchNotesResponse>("/notes", {
     params: { search, page, tag, perPage: 12 },
   });
