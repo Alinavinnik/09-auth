@@ -1,4 +1,4 @@
-import { fetchNoteById } from "@/lib/api/api";
+import { fetchServerNoteById } from "@/lib/api/serverApi";
 import NotePreviewClient from "./NotePreview.client";
 import {
   dehydrate,
@@ -15,7 +15,7 @@ export default async function ModalPreview({ params }: ModalProps) {
   const queryClient = new QueryClient();
   queryClient.prefetchQuery({
     queryKey: ["note", id],
-    queryFn: () => fetchNoteById(id),
+    queryFn: () => fetchServerNoteById(id),
   });
 
   return (
