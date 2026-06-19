@@ -59,4 +59,8 @@ export async function getMe() {
   const { data } = await apiClient.get<User>("/users/me");
   return data;
 }
-export async function updateMe() {}
+
+export async function updateMe(body: { username: string }) {
+  const { data } = await apiClient.patch<User>("/users/me", body);
+  return data;
+}
