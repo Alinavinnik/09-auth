@@ -37,7 +37,7 @@ export default function Notes({ tag }: NotesProps) {
   return (
     <div className={css.app}>
       <header className={css.toolbar}>
-        <SearchBox onChange={onChange} />
+        <SearchBox onChange={onChange} value={searchQuery} />
         {data && totalPages > 1 && (
           <Pagination
             pageCount={data.totalPages}
@@ -51,7 +51,7 @@ export default function Notes({ tag }: NotesProps) {
       </header>
       {isError && (
         <p style={{ color: "#f61515" }}>
-          Somthing went wrong!Please reload your page
+          Something went wrong! Please reload your page
         </p>
       )}
       {isLoading && <Loader />}
