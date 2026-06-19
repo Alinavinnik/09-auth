@@ -18,18 +18,18 @@ export async function generateMetadata({
   const response = await fetchServerNoteById(id);
 
   return {
-    title: `${response.data.title}`,
-    description: ` ${response.data.content}`,
+    title: `${response.title}`,
+    description: ` ${response.content}`,
     openGraph: {
-      title: `${response.data.title}`,
-      description: ` ${response.data.content}`,
+      title: `${response.title}`,
+      description: ` ${response.content}`,
       url: `https://08-zustand-nine-psi.vercel.app/notes/filter/${id}`,
       images: [
         {
           url: "https://ac.goit.global/fullstack/react/notehub-og-meta.jpg",
           width: 1200,
           height: 630,
-          alt: `${response.data.title}`,
+          alt: `${response.title}`,
         },
       ],
     },

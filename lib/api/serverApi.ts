@@ -2,6 +2,7 @@ import { cookies } from "next/headers";
 import { apiClient } from "./api";
 import { FetchNotesResponse, Note } from "@/types/note";
 import { checkSessionResponce } from "./clientApi";
+import { User } from "@/types/user";
 
 export const fetchServerNotes = async (
   search: string,
@@ -20,7 +21,7 @@ export const fetchServerNotes = async (
       Cookie: cookieStore.toString(),
     },
   });
-  return res;
+  return res.data;
 };
 
 export const fetchServerNoteById = async (id: string) => {
@@ -32,10 +33,20 @@ export const fetchServerNoteById = async (id: string) => {
     },
   });
 
-  return res;
+  return res.data;
 };
 
-export const getMe = async () => {};
+export const getServerMe = async () => {
+  const cookieStore = await cookies();
+
+  const res = await apiClient.get<User>("/users/me", {
+    headers: {
+      Cookie: cookieStore.toString(),
+    },
+  });
+
+  return res;
+};
 
 export const checkServerSession = async () => {
   const cookieStore = await cookies();
