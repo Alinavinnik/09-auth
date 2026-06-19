@@ -14,12 +14,12 @@ function NoteDetailsClient() {
     enabled: !!id,
   });
 
-  {
-    isLoading && <p>Loading, please wait...</p>;
+  if (isLoading) {
+    return <p>Loading, please wait...</p>;
   }
 
-  {
-    isError && <p>Something went wrong.</p>;
+  if (isError) {
+    return <p>Something went wrong.</p>;
   }
 
   return (

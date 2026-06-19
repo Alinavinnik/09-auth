@@ -1,7 +1,7 @@
 import { cookies } from "next/headers";
 import { apiClient } from "./api";
 import { FetchNotesResponse, Note } from "@/types/note";
-import { checkSessionResponce } from "./clientApi";
+import { CheckSessionResponse } from "./clientApi";
 import { User } from "@/types/user";
 
 export const fetchServerNotes = async (
@@ -39,18 +39,18 @@ export const fetchServerNoteById = async (id: string) => {
 export const getServerMe = async () => {
   const cookieStore = await cookies();
 
-  const res = await apiClient.get<User>("/users/me", {
+  const { data } = await apiClient.get<User>("/users/me", {
     headers: {
       Cookie: cookieStore.toString(),
     },
   });
 
-  return res;
+  return data;
 };
 
 export const checkServerSession = async () => {
   const cookieStore = await cookies();
-  const res = await apiClient.get<checkSessionResponce>("/auth/session", {
+  const res = await apiClient.get<CheckSessionResponse>("/auth/session", {
     headers: {
       Cookie: cookieStore.toString(),
     },

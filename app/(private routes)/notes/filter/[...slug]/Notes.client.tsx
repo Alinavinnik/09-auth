@@ -11,7 +11,6 @@ import NoteForm from "@/components/NoteForm/NoteForm";
 import { fetchNotes } from "@/lib/api/clientApi";
 import { useDebouncedCallback } from "use-debounce";
 import SearchBox from "@/components/SearchBox/SearchBox";
-import Modal from "@/components/Modal/Modal";
 import NoteList from "@/components/NoteList/NoteList";
 import Link from "next/link";
 
@@ -23,7 +22,7 @@ export default function Notes({ tag }: NotesProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [page, setPage] = useState(1);
 
-  const validTag = tag === "all" ? undefined : tag;
+  const validTag = tag === "all" ? "" : tag;
   //Search note
   const { data, isError, isLoading } = useQuery({
     queryKey: ["notes", searchQuery, page, validTag],

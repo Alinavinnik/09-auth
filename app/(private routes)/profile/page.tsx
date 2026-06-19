@@ -2,6 +2,7 @@ import Link from "next/link";
 import css from "./ProfilePage.module.css";
 import { getServerMe } from "@/lib/api/serverApi";
 import { Metadata } from "next";
+import Image from "next/image";
 
 export const metadata: Metadata = {
   title: "Profile Page | NoteHub",
@@ -32,7 +33,7 @@ export const metadata: Metadata = {
 };
 
 export default async function Profile() {
-  const { data } = await getServerMe();
+  const user = await getServerMe();
 
   return (
     <main className={css.mainContent}>
@@ -44,8 +45,8 @@ export default async function Profile() {
           </Link>
         </div>
         <div className={css.avatarWrapper}>
-          <img
-            src={data.avatar}
+          <Image
+            src={user.avatar}
             alt="User Avatar"
             width={120}
             height={120}
@@ -53,8 +54,8 @@ export default async function Profile() {
           />
         </div>
         <div className={css.profileInfo}>
-          <p>Username: {data.username}</p>
-          <p>Email: {data.email}</p>
+          <p>Username: {user.username}</p>
+          <p>Email: {user.email}</p>
         </div>
       </div>
     </main>

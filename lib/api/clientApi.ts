@@ -5,7 +5,7 @@ import { User } from "@/types/user";
 //Get request
 export async function fetchNotes(search: string, page: number, tag?: string) {
   const { data } = await apiClient.get<FetchNotesResponse>("/notes", {
-    params: { page, search, perPage: 12, tag },
+    params: { search, page, tag, perPage: 12 },
   });
   return data;
 }
@@ -42,16 +42,16 @@ export async function login(user: RegisterRequest) {
   return data;
 }
 
-export interface checkSessionResponce {
+export interface CheckSessionResponse {
   success: boolean;
 }
 
 export async function checkSession() {
-  const { data } = await apiClient.get<checkSessionResponce>("/auth/session");
+  const { data } = await apiClient.get<CheckSessionResponse>("/auth/session");
   return data;
 }
 export async function logout() {
-  const { data } = await apiClient.post<checkSessionResponce>("/auth/logout");
+  const { data } = await apiClient.post<CheckSessionResponse>("/auth/logout");
   return data;
 }
 
